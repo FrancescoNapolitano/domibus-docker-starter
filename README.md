@@ -22,11 +22,27 @@ It will ask you to change the password, this is one ready to use: **G7u@xQp9T$eL
 
 ## Usefull keytool command
 
-keytool -genkeypair -alias my-domibus -keyalg RSA -keysize 2048 -validity 3650 -keystore keystore.jks
+### JKS
 
-keytool -exportcert -alias my-domibus -keystore keystore.jks -file domibus.cer
+# Keystore
+keytool -genkeypair -alias my-domibus -keyalg RSA -keysize 2048 -validity 3650 -keystore keystore.jks -storetype JKS -storepass password -keypass password -dname "CN=my-domibus"
 
-keytool -importcert -alias my-domibus -file domibus.cer -keystore truststore.jks
+# Export certificate
+keytool -exportcert -alias my-domibus -keystore keystore.jks -storepass password -file domibus.cer
+
+# Truststore + import certificate
+keytool -importcert -alias my-domibus -file domibus.cer -keystore truststore.jks -storetype JKS -storepass password -noprompt
+
+### PKCS12
+
+# Keystore
+keytool -genkeypair -alias my-domibus -keyalg RSA -keysize 2048 -validity 3650 -keystore keystore.p12 -storetype PKCS12 -storepass password -keypass password -dname "CN=my-domibus"
+
+# Export certificate
+keytool -exportcert -alias my-domibus -keystore keystore.p12 -storetype PKCS12 -storepass password -file domibus.cer
+
+# Truststore + import certificate
+keytool -importcert -alias my-domibus -file domibus.cer -keystore truststore.p12 -storetype PKCS12 -storepass password -noprompt
 
 ## Domibus property
 
