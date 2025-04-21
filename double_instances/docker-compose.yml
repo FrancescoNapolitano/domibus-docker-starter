@@ -1,0 +1,85 @@
+services:
+  activemq-domibus1:
+    image: rmohr/activemq
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+    networks:
+      - dominet
+    environment:
+      - ARTEMIS_USER=admin
+      - ARTEMIS_PASSWORD=admin
+  mysqldb-domibus1:
+    image: mysql:latest
+    restart: always
+    healthcheck:
+      test: "test -f /tmp/init-done"
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+      start_interval: 30s
+    container_name: mysqldb-domibus1
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../sql:/docker-entrypoint-initdb.d/
+    networks:
+      - dominet
+  domibus1:
+    image: local-docker/domibus
+    container_name: domibus-1
+    volumes:
+      - ./conf/domibus_1/:/usr/local/tomcat/conf/domibus
+    ports:
+      - "8080:8080"
+    networks:
+      - dominet
+    depends_on:
+      mysqldb-domibus1:
+        condition: service_healthy
+      activemq-domibus1:
+        condition: service_started
+  activemq-domibus2:
+    image: rmohr/activemq
+    networks:
+      - dominet
+    environment:
+      - ARTEMIS_USER=admin
+      - ARTEMIS_PASSWORD=admin
+  mysqldb-domibus2:
+    image: mysql:latest
+    restart: always
+    healthcheck:
+      test: "test -f /tmp/init-done"
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+      start_interval: 30s
+    container_name: mysqldb-domibus2
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ../sql:/docker-entrypoint-initdb.d/
+    networks:
+      - dominet
+  domibus2:
+    image: local-docker/domibus
+    container_name: domibus-2
+    volumes:
+      - ./conf/domibus_2/:/usr/local/tomcat/conf/domibus
+    ports:
+      - "8081:8080"
+    networks:
+      - dominet
+    depends_on:
+      mysqldb-domibus2:
+        condition: service_healthy
+      activemq-domibus2:
+        condition: service_started
+networks:
+  dominet:
+    driver: bridge
