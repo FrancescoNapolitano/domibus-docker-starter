@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<db:configuration xmlns:db="http://domibus.eu/configuration" party="domibus-1">
+<db:configuration xmlns:db="http://domibus.eu/configuration" party="my-domibus-1">
 
 	<mpcs>
 		<mpc name="defaultMpc"
@@ -34,13 +34,13 @@
 			<partyIdTypes>
 				<partyIdType name="partyTypeUrn" value="urn:oasis:names:tc:ebcore:partyid-type:unregistered"/>
 			</partyIdTypes>
-			<party name="domibus-1"
+			<party name="my-domibus-1"
 				    endpoint="http://domibus-1:8080/services/msh">
-				<identifier partyId="domibus-1" partyIdType="partyTypeUrn"/>
+				<identifier partyId="my-domibus-1" partyIdType="partyTypeUrn"/>
 			</party>
-			<party name="domibus-2" 
-					endpoint="http://domibus-2:8081/services/msh">
-				<identifier partyId="domibus-2" partyIdType="partyTypeUrn"/>
+			<party name="my-domibus-2" 
+					endpoint="http://domibus-2:8080/services/msh">
+				<identifier partyId="my-domibus-2" partyIdType="partyTypeUrn"/>
 			</party>
 		</parties>
 		<meps>
@@ -157,12 +157,12 @@
          initiatorRole="defaultInitiatorRole"
          responderRole="defaultResponderRole">
 	<initiatorParties>
-		<initiatorParty name="domibus-1"/>
-		<initiatorParty name="domibus-2"/>
+		<initiatorParty name="my-domibus-1"/>
+		<initiatorParty name="my-domibus-2"/>
 	</initiatorParties>
 	<responderParties>
-		<responderParty name="domibus-1"/>
-		<responderParty name="domibus-2"/>
+		<responderParty name="my-domibus-1"/>
+		<responderParty name="my-domibus-2"/>
 	</responderParties>
 	<legs>
 		<leg name="pushTestcase1tc1Action"/>
@@ -175,10 +175,10 @@
 		 initiatorRole="defaultResponderRole"
 		 responderRole="defaultInitiatorRole">
 	<initiatorParties>
-		<initiatorParty name="domibus-2"/>
+		<initiatorParty name="my-domibus-2"/>
 	</initiatorParties>
 	<responderParties>
-		<responderParty name="domibus-1"/>
+		<responderParty name="my-domibus-1"/>
 	</responderParties>
 	<legs>
 		<leg name="pullTestcase2tc2Action"/>
